@@ -21,8 +21,10 @@ class UsersController {
       const hashedPassword = await hashPassword(password);
       console.log(hashedPassword);
       const user = await PrismaClient.user.create({
-        ...body,
-        password: hashedPassword,
+        data: {
+          ...body,
+          password: hashedPassword,
+        },
       });
       res.json(user);
     } catch (error) {

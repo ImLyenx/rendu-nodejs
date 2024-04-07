@@ -6,14 +6,16 @@ const { authenticateToken } = require("../middlewares/auth");
 
 const router = express.Router();
 
-router.post("/login", AuthController.login);
-router.get("/profile", authenticateToken, (req, res) => {
-  res.json(req.user);
+router.post("/api/login", AuthController.login);
+router.get("/api/profile", authenticateToken, (req, res) => {
+  const user = req.user;
+  delete user.password;
+  res.json(user);
 });
 
-router.get("/users", UsersController.index);
-router.get("/users/:id", UsersController.show);
-router.post("/users", UsersController.store);
-router.delete("/users/:id", UsersController.delete);
+router.get("/api/users", UsersController.index);
+router.get("/api/users/:id", UsersController.show);
+router.post("/api/users", UsersController.store);
+router.delete("/api/users/:id", UsersController.delete);
 
 module.exports = router;
